@@ -1,4 +1,4 @@
-import { resend, supabase } from './_lib/clients.js';
+import { resend, supabase, brandedEmailTemplate } from './_lib/clients.js';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -27,31 +27,40 @@ export default async function handler(req, res) {
 
         if (resend) {
             // Send notification to site owner
+            const ownerHtml = brandedEmailTemplate(
+                'New Support Request',
+                `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <div style="background-color: #f3f4f6; padding: 20px; border-radius: 12px; margin-top: 20px;">
+                  <p style="margin: 0; color: #374151;"><strong>Message:</strong></p>
+                  <p style="margin: 10px 0 0 0;">${message}</p>
+                </div>
+                `
+            );
+
             await resend.emails.send({
-                from: 'hi@kineticos.store',
-                to: 'hi@kineticos.store',
+                from: 'KineticOS Support <noreply@kineticos.store>',
+                to: 'link.nikhilmishra@gmail.com',
                 subject: `[Support] New Message from ${name}`,
-                html: `
-          <h3>New Support Request</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message}</p>
-        `
+                html: ownerHtml
             });
 
             // Send confirmation to user
+            const userHtml = brandedEmailTemplate(
+                'Message Received',
+                `
+                <p>Hi ${name},</p>
+                <p>Thank you for reaching out to us. We've received your message and our team will get back to you within 24 hours.</p>
+                <p>Best regards,<br>The Support Team</p>
+                `
+            );
+
             await resend.emails.send({
-                from: 'hi@kineticos.store',
+                from: 'KineticOS Support <noreply@kineticos.store>',
                 to: email,
-                subject: 'We received your message - KineticOS Support',
-                html: `
-          <p>Hi ${name},</p>
-          <p>Thank you for reaching out to KineticOS support. We've received your message and our team will get back to you within 24 hours.</p>
-          <p><strong>Your message:</strong></p>
-          <blockquote>${message}</blockquote>
-          <p>Best regards,<br>The KineticOS Team</p>
-        `
+                subject: 'We received your message - KineticOS',
+                html: userHtml
             });
         }
 

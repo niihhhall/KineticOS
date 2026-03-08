@@ -1,4 +1,4 @@
-import { stripe, resend } from './_lib/clients.js';
+import { stripe, resend, brandedEmailTemplate } from './_lib/clients.js';
 
 // Vercel handles raw body for us if we disable the body parser (common pattern)
 // But for Node functions, we usually get the buffer.
@@ -46,12 +46,23 @@ export default async function handler(req, res) {
 
         try {
             if (session.customer_details?.email && resend) {
+                const purchaseHtml = brandedEmailTemplate(
+                    'Welcome to KineticOS',
+                    `
+                    <p>Thank you for your purchase! We're excited to have you on board.</p>
+                    <p>Your workspace is ready. Click the link below to access your template and duplicate it to your Notion workspace:</p>
+                    <div style="margin: 32px 0; text-align: center;">
+                      <a href="https://notion.so/" style="background-color: #ff751f; color: #ffffff; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 700; display: inline-block;">Access Notion Template</a>
+                    </div>
+                    <p>If you have any questions, just reply to this email!</p>
+                    `
+                );
+
                 await resend.emails.send({
-                    from: 'hi@kineticos.store',
+                    from: 'KineticOS Support <noreply@kineticos.store>',
                     to: session.customer_details.email,
                     subject: 'Your KineticOS Notion Template',
-                    html: `<p>Thank you for your purchase! Welcome to KineticOS.</p>
-                 <p>Here is your <a href="https://notion.so/">Notion template link</a>. Please duplicate it to your workspace.</p>`
+                    html: purchaseHtml
                 });
                 console.log('✅ Email sent successfully via Resend');
             }
