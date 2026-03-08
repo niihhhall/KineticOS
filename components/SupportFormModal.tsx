@@ -35,10 +35,25 @@ export const SupportFormModal: React.FC<SupportFormModalProps> = ({ isOpen, onCl
         e.preventDefault();
         setFormState('submitting');
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        try {
+            const response = await fetch('http://localhost:4242/api/support', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
 
-        setFormState('success');
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            setFormState('success');
+        } catch (error) {
+            console.error('Error sending support message:', error);
+            alert('Failed to send message. Please try again later.');
+            setFormState('idle');
+        }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
