@@ -123,9 +123,15 @@ const MobileTestimonials = ({ items }: { items: typeof TESTIMONIALS }) => {
   const tickerItems = [...items, ...items, ...items];
 
   return (
-    <div className="lg:hidden relative w-full overflow-hidden py-4 -mx-6">
+    <div className="lg:hidden relative w-full overflow-hidden py-4">
+      {/* Left Gradient Mask */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none" />
+
+      {/* Right Gradient Mask */}
+      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none" />
+
       <motion.div
-        className="flex gap-4 px-6 w-max"
+        className="flex gap-6 px-6 w-max"
         animate={{
           x: ["0%", "-33.333%"]
         }}
