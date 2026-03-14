@@ -219,7 +219,7 @@ export const ClientAchievementSection: React.FC = () => {
                     <div className="mb-8 md:mb-10">
                         <h3 className="text-white/80 font-medium mb-1">One-time Investment</h3>
                         <div className="flex items-baseline gap-2">
-                           <span className="text-5xl md:text-6xl font-bold tracking-tighter">$247</span>
+                           <span className="text-5xl md:text-6xl font-bold tracking-tighter blur-[4px] select-none">$247</span>
                         </div>
                         <div className="mt-2 inline-flex items-center gap-2 text-white/60 text-sm">
                             <span className="line-through decoration-white/50">$125/month</span>
