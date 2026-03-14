@@ -1,3 +1,4 @@
+// This file triggers a fresh build on Vercel
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
