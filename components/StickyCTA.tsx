@@ -119,7 +119,7 @@ export const StickyCTA: React.FC<StickyCTAProps> = ({ onToggleMenu }) => {
                     }}
                     className="text-[10px] font-bold uppercase tracking-wider block"
                   >
-                    Reserve Your Slot
+                    🔒 No credit card
                   </motion.span>
                 </div>
               </div>

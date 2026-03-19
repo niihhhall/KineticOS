@@ -35,7 +35,7 @@ const BentoCard: React.FC<BentoCardProps> = ({ children, className = "", delay =
   );
 };
 
-const AnimatedNumber: React.FC<{ value: string; className?: string }> = ({ value, className }) => {
+export const AnimatedNumber: React.FC<{ value: string; className?: string }> = ({ value, className }) => {
   const nodeRef = useRef<HTMLSpanElement>(null);
   const isInView = useInView(nodeRef, { once: true, margin: "-10% 0px -10% 0px" });
   

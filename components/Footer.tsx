@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="text-sm text-gray-500 font-medium">
-          &copy; {new Date().getFullYear()} KineticOS. All rights reserved. Not affiliated with Notion.
+          &copy; {new Date().getFullYear()} KineticOS. All rights reserved. UNIK BUILD
         </div>
 
         <div className="flex gap-6 items-center">

@@ -156,8 +156,11 @@ export const PricingSection: React.FC = () => {
 
             <div className="w-px h-10 bg-black/5 hidden md:block" />
 
-            <div className="scale-90 origin-center">
-              <CountdownTimer compact />
+            <div className="flex flex-col items-center gap-3">
+              <div className="text-[9px] text-gray-400 font-bold uppercase tracking-[0.15em] whitespace-nowrap">Founding Member Pricing Expires In:</div>
+              <div className="scale-90 origin-center">
+                <CountdownTimer compact />
+              </div>
             </div>
           </motion.div>
         </div>

@@ -199,7 +199,7 @@ export const ComparisonMatrixSection: React.FC = () => {
         
         <div className="mt-8 text-center">
            <p className="text-sm text-gray-400 font-medium italic">
-             Comparison based on average market rates and delivery timelines for 2024.
+             Comparison based on average market rates and delivery timelines for 2025.
            </p>
         </div>
       </div>

@@ -1,8 +1,9 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 // Shadow motion to bypass environment-specific type errors with framer-motion props
 import { motion as motionBase } from 'framer-motion';
 const motion = motionBase as any;
+import { AnimatedNumber } from './ClientAchievementSection';
+import { WaitlistModal } from './WaitlistModal';
 
 const TESTIMONIALS = [
   {
@@ -172,6 +173,14 @@ const MobileTestimonials = ({ items }: { items: typeof TESTIMONIALS }) => {
 };
 
 export const TestimonialsSection: React.FC = () => {
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const [selectedTier, setSelectedTier] = useState<string | undefined>();
+
+  const handleWaitlistOpen = () => {
+    setSelectedTier("Pro Freelancer"); // Default to most popular tier
+    setIsWaitlistOpen(true);
+  };
+
   return (
     <section className="py-16 md:py-24 bg-white relative overflow-hidden px-6 md:px-12 lg:px-24">
       {/* Gradient Transition to Next Section (White -> Brand BG) */}
@@ -218,30 +227,44 @@ export const TestimonialsSection: React.FC = () => {
         </div>
 
         {/* Bottom Bar Metrics */}
-        <div className="mt-12 md:mt-16 pt-8 md:pt-10 border-t border-black/5 flex flex-wrap justify-between items-center gap-8 relative">
-          <div className="flex gap-12">
+        <div className="mt-12 md:mt-16 pt-8 md:pt-10 border-t border-black/5 flex flex-col md:flex-row md:justify-between items-start md:items-center gap-8 relative">
+          <div className="flex flex-wrap gap-x-10 gap-y-6 md:gap-12">
             <div>
-              <div className="text-3xl font-bold text-brand-text">100+</div>
+              <div className="text-3xl font-bold text-brand-text flex items-baseline">
+                <AnimatedNumber value="100" />
+                <span>+</span>
+              </div>
               <div className="text-sm text-gray-500 font-medium">Verified Users</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-brand-text">24/7</div>
+              <div className="text-3xl font-bold text-brand-text flex items-baseline">
+                <AnimatedNumber value="24" />
+                <span>/7</span>
+              </div>
               <div className="text-sm text-gray-500 font-medium">Customer Support</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-brand-text">99%</div>
+              <div className="text-3xl font-bold text-brand-text flex items-baseline">
+                <AnimatedNumber value="99" />
+                <span>%</span>
+              </div>
               <div className="text-sm text-gray-500 font-medium">Client Satisfaction</div>
             </div>
           </div>
 
           <button
-            onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={handleWaitlistOpen}
             className="bg-[#ff751f] text-white px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform shadow-lg shadow-[#ff751f]/20"
           >
             Start Your Own Story
           </button>
         </div>
       </div>
+      <WaitlistModal 
+        isOpen={isWaitlistOpen} 
+        onClose={() => setIsWaitlistOpen(false)} 
+        tier={selectedTier} 
+      />
     </section>
   );
 };

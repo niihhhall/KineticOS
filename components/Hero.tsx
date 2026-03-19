@@ -10,6 +10,7 @@ import { WaitlistModal } from './WaitlistModal';
 
 interface HeroProps {
   onReady?: () => void;
+  isIntroComplete?: boolean;
 }
 
 const AsteriskLogo = ({ className = "w-12 h-12" }: { className?: string }) => (
@@ -53,7 +54,7 @@ const MaskedText: React.FC<{ children: React.ReactNode; className?: string; dela
   );
 };
 
-export const Hero: React.FC<HeroProps> = ({ onReady }) => {
+export const Hero: React.FC<HeroProps> = ({ onReady, isIntroComplete }) => {
   const isPreLaunch = true; // Toggle this for launch day
   const [stage, setStage] = useState(0);
   const [showCTA, setShowCTA] = useState(false);
@@ -155,7 +156,7 @@ export const Hero: React.FC<HeroProps> = ({ onReady }) => {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative min-h-screen flex flex-col justify-center items-center overflow-hidden bg-brand-bg px-6 md:px-12 lg:px-24 pt-24 pb-16 perspective-1000"
+      className={`relative ${isIntroComplete ? 'min-h-screen py-24' : 'h-[100svh] overflow-hidden'} flex flex-col justify-center items-center bg-brand-bg px-6 md:px-12 lg:px-24 perspective-1000 transition-all duration-1000 ease-in-out`}
     >
 
 
@@ -330,7 +331,7 @@ export const Hero: React.FC<HeroProps> = ({ onReady }) => {
                     <div className="relative bg-white/60 backdrop-blur-2xl border border-white/60 p-2 rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] flex flex-col md:flex-row gap-2">
 
                       {/* Action Zone (Left) */}
-                      <div className="bg-white/50 rounded-[1.5rem] p-6 md:p-8 flex-1 flex flex-col justify-center items-center border border-black/[0.03] shadow-inner relative overflow-hidden">
+                      <div className="bg-white/50 rounded-[1.5rem] p-6 md:p-8 flex-[1.6] flex flex-col justify-center items-center border border-black/[0.03] shadow-inner relative overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-transparent opacity-50 pointer-events-none" />
                         <Button
                           onClick={scrollToPricing}
@@ -345,14 +346,14 @@ export const Hero: React.FC<HeroProps> = ({ onReady }) => {
                           </div>
                           <div className="w-1 h-1 rounded-full bg-gray-300" />
                           <div className="flex items-center gap-1.5 text-[#ff751f]">
-                            <Zap className="w-3 h-3 fill-current" />
-                            <span>Reserve Your Slot</span>
+                            <span>🔒 No credit card</span>
                           </div>
                         </div>
                       </div>
 
                         {/* Urgency Zone (Right) */}
-                        <div className="bg-gray-100/50 rounded-[1.5rem] p-6 md:px-10 flex flex-col justify-center items-center border border-black/[0.03] min-w-[260px]">
+                        <div className="bg-gray-100/50 rounded-[1.5rem] p-6 md:px-10 flex-1 flex flex-col justify-center items-center border border-black/[0.03] w-full">
+                          <div className="mb-4 text-[9px] text-gray-400 font-bold uppercase tracking-[0.15em] whitespace-nowrap">Founding Member Pricing Expires In:</div>
                           <div className="pt-2">
                             <CountdownTimer compact />
                           </div>

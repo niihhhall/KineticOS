@@ -83,6 +83,7 @@ function App() {
   const [isPastHero, setIsPastHero] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [isIntroComplete, setIsIntroComplete] = useState(false);
 
   // Store Lenis instance in a ref to use it for programmatic scrolling
   const lenisRef = useRef<Lenis | null>(null);
@@ -115,6 +116,17 @@ function App() {
       lenisRef.current = null;
     };
   }, []);
+
+  // Control Lenis scrolling based on intro state
+  useEffect(() => {
+    if (lenisRef.current) {
+      if (isIntroComplete) {
+        lenisRef.current.start();
+      } else {
+        lenisRef.current.stop();
+      }
+    }
+  }, [isIntroComplete]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -411,82 +423,100 @@ function App() {
       </AnimatePresence>
 
       <main className="relative z-10">
-        <Hero onReady={() => setShowNav(true)} />
+        <Hero 
+          onReady={() => {
+            setShowNav(true);
+            setIsIntroComplete(true);
+          }} 
+          isIntroComplete={isIntroComplete}
+        />
 
         <AnimatePresence>
-          {showNav && (
+          {isIntroComplete && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
             >
-              <FeatureTickerSection />
+              <AnimatePresence>
+                {showNav && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                  >
+                    <FeatureTickerSection />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Video Tour (Preview) */}
+              <div id="video-tour" className="scroll-mt-40">
+                <VideoSection />
+              </div>
+
+              {/* User Reviews */}
+              <div id="testimonials" className="scroll-mt-40">
+                <TestimonialsSection />
+              </div>
+
+              {/* Visual Problem Solution Card (The Problem Section) */}
+              <div id="problem" className="scroll-mt-40">
+                <VisualProblemSolution />
+              </div>
+
+              {/* Client Achievement Metrics (Impact Matrix) */}
+              <div id="results" className="scroll-mt-40">
+                <ClientAchievementSection />
+              </div>
+
+              {/* Problem Awareness */}
+              <div id="problem-awareness" className="scroll-mt-40">
+                <ProblemSolutionComparison />
+              </div>
+
+              {/* Transformations */}
+              <div id="user-stories" className="scroll-mt-40">
+                <UserStoriesSection />
+              </div>
+
+              {/* Solution Section */}
+              <div id="solution" className="scroll-mt-40">
+                <SolutionSection />
+              </div>
+
+              {/* Market Comparison */}
+              <div id="comparison-matrix" className="scroll-mt-40">
+                <ComparisonMatrixSection />
+              </div>
+
+              {/* Tale of Freelancers */}
+              <div id="tale-of-freelancers" className="scroll-mt-40">
+                <Comparison />
+              </div>
+
+              {/* Pricing */}
+              <div id="pricing" className="scroll-mt-40">
+                <PricingSection />
+              </div>
+
+              {/* Post Purchase Steps */}
+              <PostPurchaseSection />
+
+              {/* FAQs */}
+              <div id="faq" className="scroll-mt-40">
+                <FAQSection />
+              </div>
+
+              <Footer />
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Video Tour (Preview) */}
-        <div id="video-tour" className="scroll-mt-40">
-          <VideoSection />
-        </div>
-
-        {/* User Reviews */}
-        <div id="testimonials" className="scroll-mt-40">
-          <TestimonialsSection />
-        </div>
-
-        {/* Visual Problem Solution Card (The Problem Section) */}
-        <div id="problem" className="scroll-mt-40">
-          <VisualProblemSolution />
-        </div>
-
-        {/* Client Achievement Metrics (Impact Matrix) */}
-        <div id="results" className="scroll-mt-40">
-          <ClientAchievementSection />
-        </div>
-
-        {/* Problem Awareness */}
-        <div id="problem-awareness" className="scroll-mt-40">
-          <ProblemSolutionComparison />
-        </div>
-
-        {/* Transformations */}
-        <div id="user-stories" className="scroll-mt-40">
-          <UserStoriesSection />
-        </div>
-
-        {/* Solution Section */}
-        <div id="solution" className="scroll-mt-40">
-          <SolutionSection />
-        </div>
-
-        {/* Market Comparison */}
-        <div id="comparison-matrix" className="scroll-mt-40">
-          <ComparisonMatrixSection />
-        </div>
-
-        {/* Tale of Freelancers */}
-        <div id="tale-of-freelancers" className="scroll-mt-40">
-          <Comparison />
-        </div>
-
-        {/* Pricing */}
-        <div id="pricing" className="scroll-mt-40">
-          <PricingSection />
-        </div>
-
-        {/* Post Purchase Steps */}
-        <PostPurchaseSection />
-
-        {/* FAQs */}
-        <div id="faq" className="scroll-mt-40">
-          <FAQSection />
-        </div>
-
-        <Footer />
       </main>
 
-      <StickyCTA onToggleMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
+      {isIntroComplete && (
+        <StickyCTA onToggleMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
+      )}
       <AnimatePresence>
         {showNav && (
           <motion.div

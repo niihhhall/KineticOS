@@ -157,18 +157,14 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, t
                     </div>
                   </div>
 
-                  <Button
-                    type="submit"
-                    fullWidth
-                    disabled={loading}
-                    className="py-4 text-lg shadow-lg shadow-orange-500/20"
-                  >
-                    {loading ? <Loader2 className="w-6 h-6 animate-spin mx-auto" /> : (
-                      <span className="flex items-center justify-center gap-2">
-                        Reserve My Spot <ArrowRight className="w-5 h-5" />
-                      </span>
-                    )}
-                  </Button>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      disabled={loading}
+                      className="py-4 text-lg shadow-lg shadow-orange-500/20"
+                    >
+                      {loading ? <Loader2 className="w-6 h-6 animate-spin mx-auto" /> : "Reserve My Spot"}
+                    </Button>
 
                   <div className="pt-4 border-t border-gray-50 flex flex-col items-center gap-4">
                     <p className="text-xs text-gray-400 font-medium">Follow the development</p>
