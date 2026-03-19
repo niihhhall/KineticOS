@@ -11,8 +11,8 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ compact = false 
   const endTimeRef = useRef<number>(0);
 
   useEffect(() => {
-    // Fixed target date: March 18, 2026
-    const targetDate = new Date('2026-03-18T00:00:00Z').getTime();
+    // Fixed target date: March 25, 2026
+    const targetDate = new Date('2026-03-25T00:00:00Z').getTime();
     endTimeRef.current = targetDate;
 
     const animate = () => {
