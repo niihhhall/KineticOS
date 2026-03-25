@@ -2,24 +2,36 @@ import { Groq } from 'groq-sdk';
 import { HfInference } from '@huggingface/inference';
 import { createClient } from '@supabase/supabase-js';
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-const hf = new HfInference(process.env.HUGGING_FACE_TOKEN);
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
-
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }
 
+    if (!process.env.GROQ_API_KEY || !process.env.HUGGING_FACE_TOKEN) {
+        console.error('❌ Missing API Keys in environment');
+        return res.status(500).json({ error: 'Chat API missing internal configuration' });
+    }
+
     try {
+        const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+        const hf = new HfInference(process.env.HUGGING_FACE_TOKEN);
+        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+        
         const { messages } = req.body;
         const userMessage = messages[messages.length - 1].content;
 
         // 1. Generate embedding for the user message
-        const { data: embedding } = await hf.featureExtraction({
+        const hfResponse = await hf.featureExtraction({
             model: 'sentence-transformers/all-MiniLM-L6-v2',
             inputs: userMessage,
         });
+
+        // Robust embedding extraction
+        const embedding = Array.isArray(hfResponse) ? hfResponse : (hfResponse && hfResponse.data ? hfResponse.data : null);
+
+        if (!embedding) {
+            throw new Error('Failed to generate embedding');
+        }
 
         // 2. Search Supabase for relevant context
         const { data: documents, error: matchError } = await supabase.rpc('match_documents', {
@@ -30,7 +42,7 @@ export default async function handler(req, res) {
 
         if (matchError) throw matchError;
 
-        const context = documents.map(doc => doc.content).join('\n\n');
+        const context = (documents || []).map(doc => doc.content).join('\n\n');
 
         // 3. Augment prompt and call Groq
         const systemPrompt = `
@@ -75,7 +87,7 @@ ${context}
                 { role: 'system', content: systemPrompt },
                 ...messages
             ],
-            model: 'llama3-8b-8192',
+            model: 'llama-3.1-8b-instant',
         });
 
         const response = chatCompletion.choices[0].message.content;

@@ -5,11 +5,11 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Load environment variables
-dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Load environment variables with explicit path
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 const port = 3001;
@@ -65,10 +65,17 @@ async function seedDatabase(supabase, hf) {
             if (existing) continue;
 
             console.log(`📡 Syncing new knowledge: "${text.substring(0, 40)}..."`);
-            const { data: embedding } = await hf.featureExtraction({
+            const hfResponse = await hf.featureExtraction({
                 model: 'sentence-transformers/all-MiniLM-L6-v2',
                 inputs: text,
             });
+
+            const embedding = Array.isArray(hfResponse) ? hfResponse : (hfResponse && hfResponse.data ? hfResponse.data : null);
+
+            if (!embedding) {
+                console.warn(`❌ Failed to get embedding for doc, skipping.`);
+                continue;
+            }
 
             await supabase.from('documents').insert({
                 content: text,
