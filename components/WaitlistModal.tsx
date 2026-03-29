@@ -90,9 +90,9 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, t
           
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: success ? 0.75 : 1, y: 0 }}
+            animate={{ opacity: 1, scale: success ? 0.8 : 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className={`relative w-full ${success ? 'max-w-md' : 'max-w-lg'} bg-white rounded-[1.75rem] md:rounded-[2rem] overflow-hidden shadow-2xl border border-white/20 transition-all duration-300`}
+            className={`relative w-full ${success ? 'max-w-sm' : 'max-w-md'} bg-white rounded-[1.75rem] md:rounded-[2rem] overflow-hidden shadow-2xl border border-white/20 transition-all duration-300`}
           >
             {/* Header branding */}
             <div className="bg-brand-bg p-6 md:p-8 text-brand-text relative border-b border-gray-100">
