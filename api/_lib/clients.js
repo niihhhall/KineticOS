@@ -40,8 +40,10 @@ export const brandedEmailTemplate = (title, content) => `
     <div style="background-color: #ff751f; padding: 32px 40px; text-align: left;">
       <table border="0" cellpadding="0" cellspacing="0" width="100%">
         <tr>
-          <td width="40" style="vertical-align: middle;">
-            <img src="https://kineticos.store/favicon.png" alt="" width="32" height="32" style="display: block; border-radius: 8px;" />
+          <td width="32" style="vertical-align: middle;">
+            <svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50 0V100M6.69873 25L93.3013 75M93.3013 25L6.69873 75" stroke="white" stroke-width="20" stroke-linecap="round"/>
+            </svg>
           </td>
           <td style="padding-left: 12px; vertical-align: middle;">
             <h2 style="margin: 0; color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.025em; line-height: 1;">KineticOS</h2>
@@ -57,7 +59,9 @@ export const brandedEmailTemplate = (title, content) => `
         ${content}
       </div>
       <div style="margin-top: 32px; opacity: 0.2; text-align: center;">
-        <img src="https://kineticos.store/favicon.png" alt="*" width="20" height="20" style="display: inline-block;" />
+        <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block;">
+          <path d="M50 0V100M6.69873 25L93.3013 75M93.3013 25L6.69873 75" stroke="#4b5563" stroke-width="20" stroke-linecap="round"/>
+        </svg>
       </div>
     </div>
     
