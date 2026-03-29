@@ -92,7 +92,7 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, t
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 0.75, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className={`relative w-full ${success ? 'max-w-sm' : 'max-w-md'} bg-white rounded-[1.75rem] md:rounded-[2rem] overflow-hidden shadow-2xl border border-white/20 transition-all duration-300`}
+            className={`relative w-full max-w-md bg-white rounded-[1.75rem] md:rounded-[2rem] overflow-hidden shadow-2xl border border-white/20 transition-all duration-300`}
           >
             {/* Header branding */}
             <div className="bg-brand-bg p-6 md:p-8 text-brand-text relative border-b border-gray-100">
@@ -208,86 +208,80 @@ export const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose, t
                   </div>
                 </form>
               ) : (
-                <div className="flex flex-col items-center text-center space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-sm mx-auto">
-                  <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center border border-green-100">
-                    <CheckCircle2 className="w-6 h-6 text-green-500" />
+                <div className="flex flex-col items-center text-center space-y-3 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-sm mx-auto p-1">
+                  <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center border border-green-100 mb-1">
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
                   </div>
                   
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                        <h3 className="text-lg md:text-xl font-bold text-gray-900 tracking-tight">Hey {fullName}! 👋</h3>
-                        <p className="text-gray-500 text-[13px] font-medium leading-relaxed">
-                          Thank you for joining our journey.<br />
-                          We're excited to have you onboard!
-                        </p>
-                    </div>
-
-                    <div className="p-3.5 rounded-2xl bg-brand-bg border border-brand-orange/10 text-center relative overflow-hidden shadow-sm">
-                      <div className="absolute top-0 right-0 p-2 opacity-5">
-                         <Star className="w-7 h-7 text-brand-orange" />
-                      </div>
-                      <p className="text-[10px] font-bold text-brand-orange uppercase tracking-[0.2em] mb-2">A message from Founder</p>
-                      <p className="text-[12px] text-gray-700 leading-relaxed font-heading">
-                        "Welcome to KineticOS! I built this system to help operators like you scale without the chaos. You're now on the list to get early access and exclusive pre-launch bonuses within the next 24-48 hours. I'll reach out personally when your spot opens up."
-                      </p>
-                    </div>
-                    
-                    <div className="pt-2">
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-100 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                            <Clock className="w-3 h-3" />
-                            Next Update: Coming Soon
-                        </div>
-                    </div>
+                  <div className="space-y-1">
+                    <h3 className="text-xl font-bold text-gray-900 tracking-tight">Hey {fullName}! 👋</h3>
+                    <p className="text-gray-500 text-[11px] font-medium leading-tight">
+                      We're excited to have you onboard!
+                    </p>
                   </div>
 
-                  <div className="w-full p-3 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-between gap-4">
-                    <code className="text-[10px] font-mono text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">
-                      {window.location.origin}?ref={waitlistData?.referralCode}
-                    </code>
-                    <button 
-                      onClick={copyReferral}
-                      className="shrink-0 p-2 rounded-xl bg-white border border-gray-200 text-[#ff751f] hover:bg-[#ff751f] hover:text-white transition-all shadow-sm"
-                    >
-                      {copied ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                    </button>
-                  </div>
-
-                  <div className="w-full flex gap-3">
-                    <Button
-                      variant="outline"
-                      fullWidth
-                      onClick={() => window.open(`https://twitter.com/intent/tweet?text=I%20just%20joined%20the%20waitlist%20for%20KineticOS!%20Check%20it%20out:%20${window.location.origin}?ref=${waitlistData?.referralCode}`, '_blank')}
-                      className="py-2.5 text-xs border-gray-200 hover:bg-black hover:text-white transition-all"
-                    >
-                      <Twitter className="w-3.5 h-3.5 mr-2" /> Share
-                    </Button>
-                    <Button
-                      variant="primary"
-                      fullWidth
-                      onClick={onClose}
-                      className="py-2.5 text-xs"
-                    >
-                      Done
-                    </Button>
+                  <div className="p-3 rounded-2xl bg-brand-bg border border-brand-orange/10 text-left relative overflow-hidden shadow-sm w-full">
+                    <p className="text-[8px] font-bold text-brand-orange uppercase tracking-widest mb-1.5 opacity-80">Message from Founder</p>
+                    <p className="text-[11px] text-gray-700 leading-snug font-medium tracking-tight">
+                      "Welcome to KineticOS! I built this system to help operators like you scale without the chaos. You're now on the list to get early access and exclusive pre-launch bonuses within the next 24-48 hours. I'll reach out personally when your spot opens up."
+                    </p>
                   </div>
                   
-                  <div className="pt-2 border-t border-gray-50 w-full flex flex-col items-center gap-3">
-                    <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Follow the Journey</p>
-                    <div className="flex gap-3">
-                      <a href="https://www.instagram.com/unik.build/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-pink-50 text-pink-600 hover:bg-pink-600 hover:text-white transition-all border border-pink-100">
-                        <Instagram className="w-4 h-4" />
-                      </a>
-                      <a href="https://www.linkedin.com/in/nikhil-mishra047/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all border border-blue-100">
-                        <Linkedin className="w-4 h-4" />
-                      </a>
-                      <a href="https://x.com/unik_47" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-gray-50 text-gray-900 hover:bg-black hover:text-white transition-all border border-gray-200">
-                        <Twitter className="w-4 h-4" />
-                      </a>
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-gray-50 border border-gray-100 text-[9px] font-bold text-gray-400 uppercase tracking-widest">
+                    <Clock className="w-3 h-3" />
+                    Next Update: Coming Soon
+                  </div>
+
+                  <div className="w-full space-y-2">
+                    <div className="w-full p-2.5 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-between gap-3">
+                      <code className="text-[10px] font-mono text-gray-500 overflow-hidden text-ellipsis whitespace-nowrap">
+                        {window.location.origin}?ref={waitlistData?.referralCode}
+                      </code>
+                      <button 
+                        onClick={copyReferral}
+                        className="shrink-0 p-1.5 rounded-lg bg-white border border-gray-200 text-[#ff751f] hover:bg-[#ff751f] hover:text-white transition-all shadow-sm"
+                      >
+                        {copied ? <CheckCircle2 className="w-3 h-3 font-bold" /> : <Copy className="w-3 h-3" />}
+                      </button>
+                    </div>
+
+                    <div className="flex gap-2 w-full">
+                      <Button
+                        variant="outline"
+                        fullWidth
+                        onClick={() => window.open(`https://twitter.com/intent/tweet?text=I%20just%20joined%20the%20waitlist%20for%20KineticOS!%20Check%20it%20out:%20${window.location.origin}?ref=${waitlistData?.referralCode}`, '_blank')}
+                        className="py-2 text-[10px] h-9 border-gray-200 hover:bg-black hover:text-white transition-all font-bold uppercase tracking-widest"
+                      >
+                        <Twitter className="w-3 h-3 mr-1.5" /> Share
+                      </Button>
+                      <Button
+                        variant="primary"
+                        fullWidth
+                        onClick={onClose}
+                        className="py-2 text-[10px] h-9 font-bold uppercase tracking-widest"
+                      >
+                        Done
+                      </Button>
                     </div>
                   </div>
                   
-                  <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                    You'll receive a personal invite when your spot opens.
+                  <div className="pt-2 border-t border-gray-50 w-full flex flex-col items-center gap-2">
+                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest">Follow the Journey</p>
+                    <div className="flex gap-4">
+                      <a href="https://www.instagram.com/unik.build/" target="_blank" rel="noopener noreferrer" className="p-1.5 rounded-lg bg-pink-50 text-pink-600 hover:bg-pink-600 hover:text-white transition-all border border-pink-100">
+                        <Instagram className="w-3.5 h-3.5" />
+                      </a>
+                      <a href="https://www.linkedin.com/in/nikhil-mishra047/" target="_blank" rel="noopener noreferrer" className="p-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition-all border border-blue-100">
+                        <Linkedin className="w-3.5 h-3.5" />
+                      </a>
+                      <a href="https://x.com/unik_47" target="_blank" rel="noopener noreferrer" className="p-1.5 rounded-lg bg-gray-50 text-gray-900 hover:bg-black hover:text-white transition-all border border-gray-200">
+                        <Twitter className="w-3.5 h-3.5" />
+                      </a>
+                    </div>
+                  </div>
+
+                  <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mt-2">
+                    You'll receive a invite when your spot opens.
                   </p>
                 </div>
               )}
