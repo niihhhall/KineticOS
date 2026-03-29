@@ -94,15 +94,16 @@ export default async function handler(req, res) {
       `;
 
       // Notify the User
-      await resend.emails.send({
+      const userMail = await resend.emails.send({
         from: 'Founder (KineticOS) <hello@kineticos.store>',
         to: email,
         subject: `You're on the list!`,
         html: brandedEmailTemplate(`Welcome to KineticOS`, emailContent),
       });
+      console.log(`📧 Welcome email sent to ${email}:`, userMail ? 'SUCCESS' : 'FAILED');
 
       // Notify the Founder (Nikhil)
-      await resend.emails.send({
+      const founderMail = await resend.emails.send({
         from: 'KineticOS System <hello@kineticos.store>',
         to: 'link.nikhilmishra@gmail.com',
         subject: `New Waitlist Signup: ${fullName}`,
@@ -116,6 +117,7 @@ export default async function handler(req, res) {
           <p>They are at <strong>position #${position}</strong> in the ${tier} waitlist.</p>
         `),
       });
+      console.log('📬 Founder notification sent.');
     }
 
     return res.status(200).json({ 

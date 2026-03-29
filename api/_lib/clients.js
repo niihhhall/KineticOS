@@ -10,7 +10,9 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_place
 
 // Initialize Resend
 const resendApiKey = process.env.RESEND_API_KEY;
+if (!resendApiKey) console.warn('⚠️ RESEND_API_KEY is missing. Emails will not be sent.');
 export const resend = resendApiKey ? new Resend(resendApiKey) : null;
+if (resend) console.log('✅ Resend Email Client initialized.');
 
 // Initialize Supabase
 const supabaseUrl = process.env.SUPABASE_URL;
