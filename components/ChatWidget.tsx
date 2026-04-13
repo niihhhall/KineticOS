@@ -40,20 +40,14 @@ export const ChatWidget: React.FC = () => {
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
-                console.error(`Chat API Error (${response.status}):`, errorData);
+                console.error(`[Chat API Error] Status: ${response.status}`, errorData);
                 
-                let errorMessage = 'Sorry, I encountered an error.';
-                if (response.status === 404) {
-                    errorMessage = 'Chat endpoint not found. (404)';
-                } else if (response.status === 500) {
-                    errorMessage = errorData.error || 'Server configuration error. (500)';
-                } else if (response.status === 403 || response.status === 401) {
-                    errorMessage = 'Access denied. Please check CORS/Permissions. (403/401)';
-                }
+                // Generic, professional error message for users
+                let errorMessage = "I'm experiencing a bit of trouble connecting right now. Please try again in a moment or contact hello@kineticos.store if this persists.";
 
                 setMessages(prev => [...prev, { 
                     role: 'assistant', 
-                    content: `${errorMessage} If this persists, please check your Vercel logs and environment variables.` 
+                    content: errorMessage
                 }]);
                 return;
             }
@@ -62,13 +56,13 @@ export const ChatWidget: React.FC = () => {
             if (data.content) {
                 setMessages(prev => [...prev, { role: 'assistant', content: data.content }]);
             } else {
-                throw new Error(data.error || 'Empty response from assistant');
+                throw new Error('Empty response');
             }
         } catch (err: any) {
-            console.error('Chat Widget Error:', err);
+            console.error('[Chat Widget Error]', err);
             setMessages(prev => [...prev, { 
                 role: 'assistant', 
-                content: `Connection error: ${err.message || 'Unknown error'}. Please check your internet or hosting status.` 
+                content: "I'm having a hard time reaching the server. Please check your connection and try again." 
             }]);
         } finally {
             setIsLoading(false);

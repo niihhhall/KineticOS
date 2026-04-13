@@ -17,9 +17,12 @@ export default async function handler(req, res) {
     }
 
     try {
-        const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-        const hf = new HfInference(process.env.HUGGING_FACE_TOKEN);
-        const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+        const groq = new Groq({ apiKey: process.env.GROQ_API_KEY.trim() });
+        const hf = new HfInference(process.env.HUGGING_FACE_TOKEN.trim());
+        const supabase = createClient(
+            process.env.SUPABASE_URL.trim(), 
+            process.env.SUPABASE_ANON_KEY.trim()
+        );
         
         const { messages } = req.body;
         const userMessage = messages[messages.length - 1].content;
