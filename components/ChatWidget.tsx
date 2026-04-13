@@ -31,21 +31,45 @@ export const ChatWidget: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('/api/chat', {
+            const apiUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '') + '/api/chat';
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ messages: [...messages, userMsg] }),
             });
 
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                console.error(`Chat API Error (${response.status}):`, errorData);
+                
+                let errorMessage = 'Sorry, I encountered an error.';
+                if (response.status === 404) {
+                    errorMessage = 'Chat endpoint not found. (404)';
+                } else if (response.status === 500) {
+                    errorMessage = errorData.error || 'Server configuration error. (500)';
+                } else if (response.status === 403 || response.status === 401) {
+                    errorMessage = 'Access denied. Please check CORS/Permissions. (403/401)';
+                }
+
+                setMessages(prev => [...prev, { 
+                    role: 'assistant', 
+                    content: `${errorMessage} If this persists, please check your Vercel logs and environment variables.` 
+                }]);
+                return;
+            }
+
             const data = await response.json();
             if (data.content) {
                 setMessages(prev => [...prev, { role: 'assistant', content: data.content }]);
             } else {
-                throw new Error(data.error || 'Failed to get response');
+                throw new Error(data.error || 'Empty response from assistant');
             }
-        } catch (err) {
-            console.error('Chat error:', err);
-            setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' }]);
+        } catch (err: any) {
+            console.error('Chat Widget Error:', err);
+            setMessages(prev => [...prev, { 
+                role: 'assistant', 
+                content: `Connection error: ${err.message || 'Unknown error'}. Please check your internet or hosting status.` 
+            }]);
         } finally {
             setIsLoading(false);
         }

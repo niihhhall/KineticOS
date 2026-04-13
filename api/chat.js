@@ -2,7 +2,11 @@ import { Groq } from 'groq-sdk';
 import { HfInference } from '@huggingface/inference';
 import { createClient } from '@supabase/supabase-js';
 
+import { setCorsHeaders } from './_lib/cors.js';
+
 export default async function handler(req, res) {
+    if (setCorsHeaders(req, res)) return;
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }

@@ -1,6 +1,9 @@
 import { resend, supabase, brandedEmailTemplate } from './_lib/clients.js';
+import { setCorsHeaders } from './_lib/cors.js';
 
 export default async function handler(req, res) {
+    if (setCorsHeaders(req, res)) return;
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method Not Allowed' });
     }

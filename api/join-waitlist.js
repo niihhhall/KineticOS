@@ -1,8 +1,11 @@
 
 import { supabase, resend, brandedEmailTemplate } from './_lib/clients.js';
 import { nanoid } from 'nanoid';
+import { setCorsHeaders } from './_lib/cors.js';
 
 export default async function handler(req, res) {
+  if (setCorsHeaders(req, res)) return;
+
   // Triggering fresh load for latest branding
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
