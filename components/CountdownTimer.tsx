@@ -12,8 +12,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({ compact = false 
 
   useEffect(() => {
     // Logic to reset every 24 hours: Count down to the next midnight
-    const now = new Date();
-    const targetDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0).getTime();
+    const targetDate = new Date(2026, 3, 20, 0, 0, 0).getTime(); // April 20, 2026
     endTimeRef.current = targetDate;
 
     const animate = () => {

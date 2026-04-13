@@ -13,7 +13,7 @@ interface HeroProps {
 }
 
 // Consistent Base URL matching index.html preload
-const HERO_IMG_BASE = "https://media.discordapp.net/attachments/1440261233625399369/1456982918370037852/PREVIEW_1.webp?ex=695baa15&is=695a5895&hm=0dd21c7acfa584a436f8b6318571324286f079d367b3727a061655b01344c690";
+const HERO_IMG_BASE = "/hero-preview.webp";
 
 const AsteriskLogo = ({ className = "w-12 h-12" }: { className?: string }) => (
   <motion.svg 
@@ -356,7 +356,7 @@ export const Hero: React.FC<HeroProps> = ({ onReady, openWaitlist }) => {
                                       FOUNDING MEMBER PRICING EXPIRES IN:
                                    </div>
                                    <CountdownTimer compact />
-                                   <div className="mt-4 md:absolute md:bottom-3 text-[10px] text-gray-400/60 font-bold uppercase tracking-[0.3em]">DON'T MISS OUT</div>
+                                   <div className="mt-4 md:absolute md:bottom-3 text-[10px] text-gray-400/60 font-bold uppercase tracking-[0.3em]">LAUNCHING GLOBALLY: APRIL 20</div>
                                 </div>
                              </div>
                         </div>
@@ -421,16 +421,8 @@ export const Hero: React.FC<HeroProps> = ({ onReady, openWaitlist }) => {
                             <div className="relative aspect-[16/10] md:aspect-[16/9] bg-gray-50 w-full group/frame overflow-hidden">
                                 {/* LCP OPTIMIZED HERO IMAGE: Responsive Picture tag with WebP + JPEG Fallback */}
                                 <picture>
-                                    {/* WebP Source */}
-                                    <source 
-                                        type="image/webp"
-                                        srcSet={`${HERO_IMG_BASE}&format=webp&width=800 800w, ${HERO_IMG_BASE}&format=webp&width=1200 1200w, ${HERO_IMG_BASE}&format=webp&width=1920 1920w`}
-                                        sizes="(max-width: 768px) 100vw, 80vw"
-                                    />
-                                    {/* JPEG Fallback */}
                                     <img 
-                                        src={`${HERO_IMG_BASE}&format=jpg&width=1920`}
-                                        srcSet={`${HERO_IMG_BASE}&format=jpg&width=800 800w, ${HERO_IMG_BASE}&format=jpg&width=1200 1200w, ${HERO_IMG_BASE}&format=jpg&width=1920 1920w`}
+                                        src={HERO_IMG_BASE}
                                         width="1920"
                                         height="1080"
                                         alt="Dashboard Context" 
