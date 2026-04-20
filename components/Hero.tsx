@@ -114,7 +114,7 @@ export const Hero: React.FC<HeroProps> = ({ onReady, openWaitlist }) => {
   }, [showCTA, onReady]);
 
   const scrollToPricing = () => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
-  const scrollToTour = () => document.getElementById('video-tour')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToTour = () => document.getElementById('dashboard-preview')?.scrollIntoView({ behavior: 'smooth' });
 
   const headlines = [
     { text: "You can't ", highlight: "improve" },
@@ -379,11 +379,12 @@ export const Hero: React.FC<HeroProps> = ({ onReady, openWaitlist }) => {
                 <AnimatePresence>
                 {showCTA && (
                     <motion.div 
+                        id="dashboard-preview"
                         initial={{ opacity: 0, y: 80, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
                         transition={{ type: "spring", stiffness: 60, damping: 20, delay: 0.2 }}
-                        className="relative w-full max-w-[1100px] mx-auto mb-20 px-2 sm:px-4 md:px-0 perspective-1000"
+                        className="relative w-full max-w-[1100px] mx-auto mb-20 px-2 sm:px-4 md:px-0 perspective-1000 scroll-mt-32"
                     >
                         {/* Ambient Glow */}
                         <div className="absolute -inset-4 bg-brand-orange/20 blur-[60px] rounded-[3rem] opacity-40 pointer-events-none" />

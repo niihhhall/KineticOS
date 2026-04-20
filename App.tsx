@@ -63,7 +63,7 @@ const AsteriskLogo = ({ className = "w-5 h-5" }: { className?: string }) => (
 );
 
 const NAV_ITEMS = [
-  { id: 'video-tour', label: 'Dashboard Preview', icon: Play },
+  { id: 'dashboard-preview', label: 'Dashboard Preview', icon: Play },
   { id: 'testimonials', label: 'User Reviews', icon: Star },
   { id: 'problem', label: 'Problems & Solution', icon: AlertCircle },
   { id: 'results', label: 'Impact Matrix', icon: BarChart3 },
@@ -461,7 +461,7 @@ function App() {
               </AnimatePresence>
 
               {/* Video Tour (Preview) */}
-              <div id="video-tour" className="scroll-mt-40">
+              <div className="scroll-mt-40">
                 <VideoSection openWaitlist={openWaitlist} />
               </div>
 
