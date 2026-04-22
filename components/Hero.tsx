@@ -356,7 +356,7 @@ export const Hero: React.FC<HeroProps> = ({ onReady, openWaitlist }) => {
                                       FOUNDING MEMBER PRICING EXPIRES IN:
                                    </div>
                                    <CountdownTimer compact />
-                                   <div className="mt-4 md:absolute md:bottom-3 text-[10px] text-gray-400/60 font-bold uppercase tracking-[0.3em]">LAUNCHING GLOBALLY: APRIL 20</div>
+                                   <div className="mt-4 md:absolute md:bottom-3 text-[10px] text-gray-400/60 font-bold uppercase tracking-[0.3em]">LAUNCHING GLOBALLY: APRIL 25</div>
                                 </div>
                              </div>
                         </div>

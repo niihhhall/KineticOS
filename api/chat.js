@@ -19,9 +19,10 @@ export default async function handler(req, res) {
     try {
         const groq = new Groq({ apiKey: process.env.GROQ_API_KEY.trim() });
         const hf = new HfInference(process.env.HUGGING_FACE_TOKEN.trim());
+        const supabaseKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY).trim();
         const supabase = createClient(
             process.env.SUPABASE_URL.trim(), 
-            process.env.SUPABASE_ANON_KEY.trim()
+            supabaseKey
         );
         
         const { messages } = req.body;

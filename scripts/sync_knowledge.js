@@ -11,7 +11,17 @@ const __dirname = path.dirname(__filename);
 // Load env from root
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+// Initialize Supabase
+// PRO TIP: Use SUPABASE_SERVICE_ROLE_KEY for admin scripts like this to bypass RLS
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+    console.error('❌ Missing Supabase configuration in .env');
+    process.exit(1);
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
 const hf = new HfInference(process.env.HUGGING_FACE_TOKEN);
 
 async function syncKnowledge() {
